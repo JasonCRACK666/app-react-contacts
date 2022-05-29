@@ -12,9 +12,12 @@ const contactsSlice = createSlice({
         (contact) => contact.id === action.payload
       );
     },
+    setContact: (state, action) => {
+      state.contacts.push(action.payload);
+    },
   },
 });
 
-export const { setContacts, deleteContact } = contactsSlice.actions;
+export const { setContacts, deleteContact, setContact } = contactsSlice.actions;
 
 export default contactsSlice.reducer;
