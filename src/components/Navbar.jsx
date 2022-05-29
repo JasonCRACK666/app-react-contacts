@@ -12,7 +12,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="flex justify-evenly h-16 items-center">
+    <nav className="flex justify-evenly h-24 items-center">
       <span className="text-2xl font-bold text-green-500">CONTACT LIST</span>
       <ul className="flex justify-center items-center gap-3">
         <li>
