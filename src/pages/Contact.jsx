@@ -10,7 +10,7 @@ const Contact = () => {
 
   const { id } = useParams();
   const dispatch = useDispatch();
-  const contacts = useSelector((state) => state.contacts.contacts);
+  const contact = useSelector((state) => state.contacts.contact);
 
   const loadContact = async (id, token) => {
     const res = await getContact(id, token);
@@ -35,18 +35,18 @@ const Contact = () => {
     <LayoutMain>
       <div className="text-center">
         <h1 className="text-6xl text-green-500 font-bold">
-          {contacts[0].nickname}
+          {contact.nickname}
         </h1>
         <h2 className="text-white text-xl opacity-30">
-          {contacts[0].name + " " + contacts[0].last_name}
+          {contact.name + " " + contact.last_name}
         </h2>
         <p className="text-6xl font-bold text-white">
-          {"#" + contacts[0].phone_number}
+          {"#" + contact.phone_number}
         </p>
         <div className="mt-4">
           <Link
             className="px-4 py-2 rounded-md bg-blue-500 hover:bg-blue-600 transition-colors text-white text-lg"
-            to={`/contact/${contacts[0].id}/edit`}
+            to={`/contact/${contact.id}/edit`}
           >
             Edit
           </Link>
