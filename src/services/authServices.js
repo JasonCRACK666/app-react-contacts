@@ -45,7 +45,7 @@ export const logout = async (token) => {
     await fetch(`${URL_API}/logout`, {
       method: "GET",
       headers: {
-        Authorization: token,
+        Authorization: `Bearer ${token}`,
       },
     });
   } catch (error) {
