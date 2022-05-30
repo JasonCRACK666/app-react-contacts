@@ -27,3 +27,26 @@ export const getContact = async (id, token) => {
     console.log(error);
   }
 };
+
+export const createContact = async (contact, token) => {
+  try {
+    const res = await fetch(`${URL_API}/contact/create`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        name: contact.name,
+        last_name: contact.last_name,
+        nickname: contact.nickname,
+        phone_number: contact.phone_number,
+        adress: contact.adress,
+      }),
+    });
+    return res.json();
+  } catch (error) {
+    return error;
+  }
+};
