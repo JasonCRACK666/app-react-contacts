@@ -50,3 +50,20 @@ export const createContact = async (contact, token) => {
     return error;
   }
 };
+
+export const updateContact = async (contact, id, token) => {
+  try {
+    const res = await fetch(`${URL_API}/contact/${id}/update`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(contact),
+    });
+    return res.json();
+  } catch (error) {
+    return error;
+  }
+};
