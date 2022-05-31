@@ -67,3 +67,17 @@ export const updateContact = async (contact, id, token) => {
     return error;
   }
 };
+
+export const deletedContact = async (id, token) => {
+  try {
+    const res = await fetch(`${URL_API}/contact/${id}/delete`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.json();
+  } catch (error) {
+    return error;
+  }
+};
