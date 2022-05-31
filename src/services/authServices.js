@@ -39,3 +39,16 @@ export const login = async (dataUser) => {
     return error;
   }
 };
+
+export const logout = async (token) => {
+  try {
+    await fetch(`${URL_API}/logout`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
