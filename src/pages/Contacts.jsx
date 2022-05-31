@@ -1,8 +1,9 @@
 import LayoutMain from "../components/layouts/LayoutMain";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getContacts } from "../services/contactsServices";
-import { setContacts } from "../redux/slices/contactsSlice";
+import { deletedContact, getContacts } from "../services/contactsServices";
+import { deleteContact, setContacts } from "../redux/slices/contactsSlice";
 import ContactItem from "../components/ContactItem";
 
 const Contacts = () => {
@@ -11,12 +12,22 @@ const Contacts = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
 
-  // add contacts in redux state
   const setContactsRedux = async (token) => {
     const res = await getContacts(token);
     setIsLoading(false);
     dispatch(setContacts(res.data));
+  };
+
+  const handleDeleteContact = async (id) => {
+    const token = localStorage.getItem("token");
+    const res = await deletedContact(id, token);
+    if (res.status === 0) {
+      navigate("/contacts");
+    } else {
+      dispatch(deleteContact(id));
+    }
   };
 
   useEffect(() => {
@@ -33,10 +44,13 @@ const Contacts = () => {
 
   return (
     <LayoutMain>
-      {/* // // TODO: hacer un mapeo de los contactos */}
       <div className="grid grid-cols-4 gap-4">
         {contacts.map((contact) => (
-          <ContactItem key={contact.id} {...contact} />
+          <ContactItem
+            key={contact.id}
+            {...contact}
+            handleDeleteContact={handleDeleteContact}
+          />
         ))}
       </div>
     </LayoutMain>
