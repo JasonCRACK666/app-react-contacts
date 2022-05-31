@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { getContact } from "../services/contactsServices";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import { getContact, deletedContact } from "../services/contactsServices";
 import { useDispatch, useSelector } from "react-redux";
 import { setContact } from "../redux/slices/contactsSlice";
 import LayoutMain from "../components/layouts/LayoutMain";
@@ -11,6 +11,7 @@ const Contact = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const contact = useSelector((state) => state.contacts.contact);
+  const navigate = useNavigate();
 
   const loadContact = async (id, token) => {
     const res = await getContact(id, token);
@@ -22,6 +23,16 @@ const Contact = () => {
     const token = localStorage.getItem("token");
     loadContact(id, token);
   }, [id]);
+
+  const handleDeleteContact = async (id) => {
+    const token = localStorage.getItem("token");
+    const res = await deletedContact(id, token);
+    if (res.messsage === "Unauthenticated.") {
+      alert("No puedes eliminarlo");
+    } else {
+      navigate("/contacts");
+    }
+  };
 
   if (isLoading) {
     return (
@@ -50,7 +61,10 @@ const Contact = () => {
           >
             Edit
           </Link>
-          <button className="px-4 py-2 rounded-md bg-red-500 hover:bg-red-600 transition-colors text-white text-lg ml-3">
+          <button
+            className="px-4 py-2 rounded-md bg-red-500 hover:bg-red-600 transition-colors text-white text-lg ml-3"
+            onClick={() => handleDeleteContact(contact.id)}
+          >
             Delete
           </button>
         </div>
